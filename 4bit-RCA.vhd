@@ -1,16 +1,16 @@
 LIBRARY IEEE;
-use IEEE.std_logic_1164.all_;
+use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-ENTITY 4bit_RCA IS
+ENTITY RCA_4bit IS
 	PORT (SW: IN STD_LOGIC_VECTOR(7 DOWNTO 0); -- b (7 downto 4) a(3 downto 0)
 	KEY0: IN STD_LOGIC; -- active low asynchronous reset input
 	KEY1: IN STD_LOGIC; -- manual clock input
 	LEDR: OUT STD_LOGIC_VECTOR(3 DOWNTO 0); 
-	LEDR9: OUT STD_LOGIC) -- overflow bit
-END 4bit_RCA;
+	LEDR9: OUT STD_LOGIC); -- overflow bit
+END RCA_4bit;
 
-ARCHITECTURE structural OF 4bit_RCA IS
+ARCHITECTURE structural OF RCA_4bit IS
 SIGNAL a, q1, b, q2, c, q3: SIGNED(3 DOWNTO 0);
 SIGNAL cn, cn1: STD_LOGIC;
 
