@@ -1,15 +1,18 @@
 LIBRARY IEEE;
 use IEEE.std_logic_1164.all_;
+use IEEE.numeric_std.all;
 
 ENTITY 4bit_RCA IS
-PORT (SW: IN STD_LOGIC_VECTOR(8 DOWNTO 0); -- a (7 downto 4) b(3 downto 0) sw8 subtraction
-KEY0: IN STD_LOGIC; -- active low asynchronous reset input
-KEY1: IN STD_LOGIC; -- manual clock input
-LEDR: OUT STD_LOGIC_VECTOR(3 DOWNTO 0); 
-LEDR9: OUT STD_LOGIC) -- overflow bit
+	PORT (SW: IN STD_LOGIC_VECTOR(7 DOWNTO 0); -- b (7 downto 4) a(3 downto 0)
+	KEY0: IN STD_LOGIC; -- active low asynchronous reset input
+	KEY1: IN STD_LOGIC; -- manual clock input
+	LEDR: OUT STD_LOGIC_VECTOR(3 DOWNTO 0); 
+	LEDR9: OUT STD_LOGIC) -- overflow bit
 END 4bit_RCA;
 
 ARCHITECTURE structural OF 4bit_RCA IS
+SIGNAL a, q1, b, q2, c, q3: SIGNED(3 DOWNTO 0);
+SIGNAL cn, cn1: STD_LOGIC;
 
 COMPONENT regn IS
 	GENERIC ( N : integer:=4); 
@@ -20,10 +23,24 @@ END COMPONENT;
 
 
 COMPONENT flipflop IS
-PORT (D, Clock, Resetn : IN STD_LOGIC;
-		Q : 					OUT STD_LOGIC);
+	PORT (D, Clock, Resetn : IN STD_LOGIC;
+	Q : OUT STD_LOGIC);
+END COMPONENT;
+
+COMPONENT signed_adder IS
+	PORT (in1, in2: IN SIGNED(3 DOWNTO 0);
+	cin: IN STD_LOGIC;
+	cout, sgn: OUT STD_LOGIC;
+	s: OUT SIGNED(3 DOWNTO 0));
 END COMPONENT;
 
 BEGIN
-reg1:  
+	a<=SIGNED(SW(3 DOWNTO 0));
+	b<=SIGNED(SW(7 DOWNTO 4));
+	regA:  regn PORT MAP (R => a, Clock => KEY1, Resetn => KEY0, Q =>q1);
+	regB:  regn PORT MAP (R => b, Clock => KEY1, Resetn => KEY0, Q =>q2);
+	regC:  regn PORT MAP (R => c, Clock => KEY1, Resetn => KEY0, Q =>q3);
+	rca: signed_adder PORT MAP (in1=>q1, in2=>q2, cin=>'0', cout=>cn, sgn=> cn1, s=>c);
+	LEDR9 <= (cn XOR cn1);
+	LEDR<=STD_LOGIC_VECTOR(q3);
 END structural;
