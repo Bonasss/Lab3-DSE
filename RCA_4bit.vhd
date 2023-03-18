@@ -35,12 +35,18 @@ COMPONENT signed_adder IS
 END COMPONENT;
 
 BEGIN
-	a<=SIGNED(SW(3 DOWNTO 0));
-	b<=SIGNED(SW(7 DOWNTO 4));
+	PROCESS(SW, a)
+		BEGIN
+		a<=SIGNED(SW(3 DOWNTO 0));
+		b<=SIGNED(SW(7 DOWNTO 4));
+	END PROCESS;
 	regA:  regn PORT MAP (R => a, Clock => KEY1, Resetn => KEY0, Q =>q1);
 	regB:  regn PORT MAP (R => b, Clock => KEY1, Resetn => KEY0, Q =>q2);
 	regC:  regn PORT MAP (R => c, Clock => KEY1, Resetn => KEY0, Q =>q3);
 	rca: signed_adder PORT MAP (in1=>q1, in2=>q2, cin=>'0', cout=>cn, sgn=> cn1, s=>c);
-	LEDR9 <= (cn XOR cn1);
-	LEDR<=STD_LOGIC_VECTOR(q3);
+	PROCESS(cn, cn1)
+		BEGIN
+		LEDR9 <= (cn XOR cn1);
+		LEDR<=STD_LOGIC_VECTOR(q3);
+	END PROCESS;
 END structural;

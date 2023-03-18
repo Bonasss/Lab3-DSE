@@ -19,8 +19,8 @@ SIGNAL f1: std_logic; --output of the xor between a and b
 BEGIN
 PROCESS(a,b,ci) IS
     BEGIN
-    f1 <= a XOR b;
-    sum <= ci XOR f1;
+    f1 <= (a XOR b);
+    sum <= (ci XOR f1);
 end process;
 mux: MUX2to1_1bit PORT MAP(input1 => b, input2 => ci, sel => f1, output => co); --include the mux in the circuit
 end mydesign;
