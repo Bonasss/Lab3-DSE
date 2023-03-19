@@ -10,7 +10,7 @@ ENTITY signed_adder IS
 END signed_adder;
 
 ARCHITECTURE structural OF signed_adder IS
-    SIGNAL q1, q2, c: STD_LOGIC_VECTOR(3 DOWNTO 0);
+    SIGNAL f, q1, q2, c: STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL co1, co2, co3: std_logic;
     
     COMPONENT full_adder IS
@@ -20,7 +20,11 @@ ARCHITECTURE structural OF signed_adder IS
 
 BEGIN
     q1 <= STD_LOGIC_VECTOR(in1);
-    q2 <= (STD_LOGIC_VECTOR(in2) XOR cin);
+    f <= STD_LOGIC_VECTOR(in2);
+    q2(3) <= f(3) XOR cin; 
+    q2(2) <= f(2) XOR cin; 
+    q2(1) <= f(1) XOR cin; 
+    q2(0) <= f(0) XOR cin; 
     fa0: full_adder PORT MAP(a => q1(0), b=> q2(0), ci => cin,  sum => c(0), co => co1);
     fa1: full_adder PORT MAP(a => q1(1), b=> q2(1), ci => co1,  sum => c(1), co => co2);
     fa2: full_adder PORT MAP(a => q1(2), b=> q2(2), ci => co2,  sum => c(2), co => co3);

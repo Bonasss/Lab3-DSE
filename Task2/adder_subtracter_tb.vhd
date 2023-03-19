@@ -36,7 +36,7 @@ PROCESS
 	WAIT FOR 100 ns;
 	switches <= '0' & "0111" & "0111"; -- 7+7 check ovf expected res: ovf ='1'
 	WAIT FOR 100 ns;
-	switches <= '0' & "0101" & "0110"; -- 6+5 check reset expected res: 0000
+	switches <= '1' & "0110" & "0101"; -- 6-5 check reset expected res: 0000 and check subtraction again
 	WAIT FOR 100 ns;
 	WAIT;
 END PROCESS;
@@ -58,7 +58,9 @@ PROCESS
 	resetn <= '1';
 	WAIT FOR 600 ns;
 	resetn <= '0';
-	WAIT FOR 10 ns;
+	WAIT FOR 50 ns;
+	resetn <= '1';
+	WAIT FOR 350 ns;
 	WAIT;
 END PROCESS;
 
