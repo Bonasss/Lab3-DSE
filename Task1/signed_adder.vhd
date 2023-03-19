@@ -25,6 +25,6 @@ BEGIN
     fa1: full_adder PORT MAP(a => q1(1), b=> q2(1), ci => co1,  sum => c(1), co => co2);
     fa2: full_adder PORT MAP(a => q1(2), b=> q2(2), ci => co2,  sum => c(2), co => co3);
     fa3: full_adder PORT MAP(a => q1(3), b=> q2(3), ci => co3,  sum => c(3), co => cout);
-    sgn <= c(3);
+    sgn <= co3;
     s <= SIGNED(c);
 END structural;
