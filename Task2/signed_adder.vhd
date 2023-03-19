@@ -20,7 +20,7 @@ ARCHITECTURE structural OF signed_adder IS
 
 BEGIN
     q1 <= STD_LOGIC_VECTOR(in1);
-    q2 <= STD_LOGIC_VECTOR(in2);
+    q2 <= (STD_LOGIC_VECTOR(in2) XOR cin);
     fa0: full_adder PORT MAP(a => q1(0), b=> q2(0), ci => cin,  sum => c(0), co => co1);
     fa1: full_adder PORT MAP(a => q1(1), b=> q2(1), ci => co1,  sum => c(1), co => co2);
     fa2: full_adder PORT MAP(a => q1(2), b=> q2(2), ci => co2,  sum => c(2), co => co3);

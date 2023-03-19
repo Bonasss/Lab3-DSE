@@ -11,14 +11,9 @@ ENTITY RCA_4bit IS
 END RCA_4bit;
 
 ARCHITECTURE structural OF RCA_4bit IS
-SIGNAL twos_comp: STD_LOGIC_VECTOR(3 DOWNTO 0);
+
 SIGNAL a, q1, b, q2, c, q3: SIGNED(3 DOWNTO 0);
 SIGNAL cn, cn1: STD_LOGIC;
-
-COMPONENT two_cmp IS
-PORT(input: IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-output: OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
-END COMPONENT;
 
 COMPONENT regn IS
 	GENERIC ( N : integer:=4); 
@@ -42,19 +37,11 @@ END COMPONENT;
 
 BEGIN
 	a<=SIGNED(SW(3 DOWNTO 0));
-	PROCESS(SW, b, twos_comp)
-		BEGIN
-		IF SW(8) = '1' THEN
-		b<=SIGNED(twos_comp);
-		ELSE
-		b<=SIGNED(SW(7 DOWNTO 4));
-		END IF;
-	END PROCESS;
+	b<=SIGNED(SW(7 DOWNTO 4));
 	regA:  regn PORT MAP (R => a, Clock => KEY1, Resetn => KEY0, Q =>q1);
 	regB:  regn PORT MAP (R => b, Clock => KEY1, Resetn => KEY0, Q =>q2);
 	regC:  regn PORT MAP (R => c, Clock => KEY1, Resetn => KEY0, Q =>q3);
-	rca: signed_adder PORT MAP (in1=>q1, in2=>q2, cin=>'0', cout=>cn, sgn=> cn1, s=>c);
-	tcp: two_cmp PORT MAP(input => SW(7 DOWNTO 4), output => twos_comp)
+	rca: signed_adder PORT MAP (in1=>q1, in2=>q2, cin=>SW(8), cout=>cn, sgn=> cn1, s=>c);
 	LEDR9 <= (cn XOR cn1);
 	LEDR<=STD_LOGIC_VECTOR(q3);
 END structural;
