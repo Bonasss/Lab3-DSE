@@ -12,6 +12,7 @@ END RCA_16bit;
 ARCHITECTURE structural OF RCA_16bit IS
 
 SIGNAL logic_a, logic_b, logic_c: STD_LOGIC_VECTOR(15 DOWNTO 0);
+SIGNAL swt1, swt2, swt3, swt4: STD_LOGIC_VECTOR(8 DOWNTO 0);
 SIGNAL c4, c8, c12: STD_LOGIC;
 
 COMPONENT RCA_4bit IS
@@ -25,9 +26,13 @@ END COMPONENT;
 BEGIN
 logic_a <= STD_LOGIC_VECTOR(a);
 logic_b <= STD_LOGIC_VECTOR(b);
-ca0: RCA_4bit PORT MAP (SW =>('0' & b(3 DOWNTO 0) & a(3 DOWNTO 0)), KEY0 => rsn, KEY1 => clk, LEDR => logic_c(3 DOWNTO 0), LEDR4 => c4, LEDR9 => open);
-ca1: RCA_4bit PORT MAP (SW =>(c4 & b(7 DOWNTO 4) & a(7 DOWNTO 4)), KEY0 => rsn, KEY1 => clk, LEDR => logic_c(7 DOWNTO 4), LEDR4 => c8, LEDR9 => open);
-ca2: RCA_4bit PORT MAP (SW =>(c8 & b(11 DOWNTO 8) & a(11 DOWNTO 8)), KEY0 => rsn, KEY1 => clk, LEDR => logic_c(11 DOWNTO 8), LEDR4 => c12, LEDR9 => open);
-ca3: RCA_4bit PORT MAP (SW =>(c12 & b(15 DOWNTO 12) & a(15 DOWNTO 12)), KEY0 => rsn, KEY1 => clk, LEDR => logic_c(15 DOWNTO 12), LEDR4 => open, LEDR9 => ovrf);
+swt1 <= ('0' & logic_b(3 DOWNTO 0) & logic_a(3 DOWNTO 0));
+swt2 <= (c4 & logic_b(7 DOWNTO 4) & logic_a(7 DOWNTO 4));
+swt3 <= (c8 & logic_b(11 DOWNTO 8) & logic_a(11 DOWNTO 8));
+swt4 <= (c12 & logic_b(15 DOWNTO 12) & logic_a(15 DOWNTO 12));
+ca0: RCA_4bit PORT MAP (SW => swt1, KEY0 => rsn, KEY1 => clock, LEDR => logic_c(3 DOWNTO 0), LEDR4 => c4, LEDR9 => open);
+ca1: RCA_4bit PORT MAP (SW =>swt2, KEY0 => rsn, KEY1 => clock, LEDR => logic_c(7 DOWNTO 4), LEDR4 => c8, LEDR9 => open);
+ca2: RCA_4bit PORT MAP (SW =>swt3, KEY0 => rsn, KEY1 => clock, LEDR => logic_c(11 DOWNTO 8), LEDR4 => c12, LEDR9 => open);
+ca3: RCA_4bit PORT MAP (SW =>swt4, KEY0 => rsn, KEY1 => clock, LEDR => logic_c(15 DOWNTO 12), LEDR4 => open, LEDR9 => ovrf);
 c <= SIGNED(logic_c);
 END structural;

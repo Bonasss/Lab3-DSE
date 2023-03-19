@@ -42,7 +42,7 @@ PROCESS
     num1 <= (0 => '1', -- 
              15 => '1',
              others => '0');
-    num2 <= (0 => '1', -- -16384 most negative value possible
+    num2 <= ( -- most negative value possible
              15 => '1',
              others => '0');
     WAIT FOR 100 ns;
@@ -61,7 +61,7 @@ PROCESS
     WAIT FOR 100 ns;
     num1 <= (15 => '0', -- most positive value possible
             others => '1');  
-    num2 <= (0 => '1', -- -16384 most negative value possible
+    num2 <= (-- most negative value possible
             15 => '1',
             others => '0'); -- risultato dovrebbe essere -1
     WAIT FOR 100 ns;
