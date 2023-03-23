@@ -7,3 +7,7 @@ c5_pin_model_dump.txt
 RCA_16bit.qpf
 RCA_16bit.qsf
 RCA_16bit.qws
+CSA_16bit.vhd.bak
+full_adder.vhd.bak
+full_adder.vhd.bak
+MUX2to1_1bit.vhd.bak

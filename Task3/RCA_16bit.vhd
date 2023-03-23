@@ -12,11 +12,11 @@ END RCA_16bit;
 ARCHITECTURE structural OF RCA_16bit IS
 
 SIGNAL logic_a, logic_b, logic_c: STD_LOGIC_VECTOR(15 DOWNTO 0);
-SIGNAL swt1, swt2, swt3, swt4: STD_LOGIC_VECTOR(8 DOWNTO 0);
+SIGNAL swt1, swt2, swt3, swt4: STD_LOGIC_VECTOR(7 DOWNTO 0);
 SIGNAL c4, c8, c12: STD_LOGIC;
 
 COMPONENT RCA_4bit IS
-    PORT (SW: IN STD_LOGIC_VECTOR(8 DOWNTO 0); -- b (7 downto 4) a(3 downto 0) sw 8 for subtraction
+    PORT (SW: IN STD_LOGIC_VECTOR(7 DOWNTO 0); -- b (7 downto 4) a(3 downto 0) sw 8 for subtraction
     KEY0, cin: IN STD_LOGIC; -- active low asynchronous reset input
     KEY1: IN STD_LOGIC; -- manual clock input
     LEDR: OUT STD_LOGIC_VECTOR(3 DOWNTO 0); 
