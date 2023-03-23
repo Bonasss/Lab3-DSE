@@ -3,8 +3,8 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 ENTITY RCA_4bit IS
-	PORT (SW: IN STD_LOGIC_VECTOR(8 DOWNTO 0); -- b (7 downto 4) a(3 downto 0) sw 8 for subtraction
-	KEY0: IN STD_LOGIC; -- active low asynchronous reset input
+	PORT (SW: IN STD_LOGIC_VECTOR(7 DOWNTO 0); -- b (7 downto 4) a(3 downto 0) sw 8 for subtraction
+	KEY0, cin: IN STD_LOGIC; -- active low asynchronous reset input
 	KEY1: IN STD_LOGIC; -- manual clock input
 	LEDR: OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
 	LEDR4, LEDR9: OUT STD_LOGIC); -- overflow bit
@@ -41,7 +41,7 @@ BEGIN
 	regA:  regn PORT MAP (R => a, Clock => KEY1, Resetn => KEY0, Q =>q1);
 	regB:  regn PORT MAP (R => b, Clock => KEY1, Resetn => KEY0, Q =>q2);
 	regC:  regn PORT MAP (R => c, Clock => KEY1, Resetn => KEY0, Q =>q3);
-	rca: signed_adder PORT MAP (in1=>q1, in2=>q2, cin=>SW(8), cout=>cn, sgn=> cn1, s=>c);
+	rca: signed_adder PORT MAP (in1=>q1, in2=>q2, cin=>cin, cout=>cn, sgn=> cn1, s=>c);
 	LEDR9 <= (cn XOR cn1);
 	LEDR<=STD_LOGIC_VECTOR(q3);
 	LEDR4<=cn;

@@ -1,2 +1,9 @@
 RCA_16bit.vhd.bak
 testbench_16bit.vhd.bak
+db
+incremental_db
+output_files
+c5_pin_model_dump.txt
+RCA_16bit.qpf
+RCA_16bit.qsf
+RCA_16bit.qws

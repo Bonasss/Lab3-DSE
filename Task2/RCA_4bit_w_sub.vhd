@@ -2,15 +2,13 @@ LIBRARY IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-ENTITY RCA_4bit IS
+ENTITY RCA_4bit_w_sub IS
 	PORT (SW: IN STD_LOGIC_VECTOR(8 DOWNTO 0); -- b (7 downto 4) a(3 downto 0) sw 8 for subtraction
-	KEY0: IN STD_LOGIC; -- active low asynchronous reset input
-	KEY1: IN STD_LOGIC; -- manual clock input
-	LEDR: OUT STD_LOGIC_VECTOR(3 DOWNTO 0); 
-	LEDR9: OUT STD_LOGIC); -- overflow bit
-END RCA_4bit;
+	KEY: IN STD_LOGIC_VECTOR(1 DOWNTO 0); -- active low asynchronous reset input  -- manual clock input
+	LEDR: OUT STD_LOGIC_VECTOR(9 DOWNTO 0)); --  RES AND overflow bit
+END RCA_4bit_w_sub;
 
-ARCHITECTURE structural OF RCA_4bit IS
+ARCHITECTURE structural OF RCA_4bit_w_sub IS
 
 SIGNAL a, q1, b, q2, c, q3: SIGNED(3 DOWNTO 0);
 SIGNAL cn, cn1: STD_LOGIC;
@@ -38,10 +36,11 @@ END COMPONENT;
 BEGIN
 	a<=SIGNED(SW(3 DOWNTO 0));
 	b<=SIGNED(SW(7 DOWNTO 4));
-	regA:  regn PORT MAP (R => a, Clock => KEY1, Resetn => KEY0, Q =>q1);
-	regB:  regn PORT MAP (R => b, Clock => KEY1, Resetn => KEY0, Q =>q2);
-	regC:  regn PORT MAP (R => c, Clock => KEY1, Resetn => KEY0, Q =>q3);
+	regA:  regn PORT MAP (R => a, Clock => KEY(1), Resetn => KEY(0), Q =>q1);
+	regB:  regn PORT MAP (R => b, Clock => KEY(1), Resetn => KEY(0), Q =>q2);
+	regC:  regn PORT MAP (R => c, Clock => KEY(1), Resetn => KEY(0), Q =>q3);
 	rca: signed_adder PORT MAP (in1=>q1, in2=>q2, cin=>SW(8), cout=>cn, sgn=> cn1, s=>c);
-	LEDR9 <= (cn XOR cn1);
-	LEDR<=STD_LOGIC_VECTOR(q3);
+	LEDR(9) <= (cn XOR cn1);
+	LEDR(8 DOWNTO 4)<="00000";
+	LEDR(3 DOWNTO 0)<=STD_LOGIC_VECTOR(q3);
 END structural;
