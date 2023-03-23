@@ -1,0 +1,760 @@
+|RCA_16bit
+a[0] => RCA_4bit:ca0.SW[0]
+a[1] => RCA_4bit:ca0.SW[1]
+a[2] => RCA_4bit:ca0.SW[2]
+a[3] => RCA_4bit:ca0.SW[3]
+a[4] => RCA_4bit:ca1.SW[0]
+a[5] => RCA_4bit:ca1.SW[1]
+a[6] => RCA_4bit:ca1.SW[2]
+a[7] => RCA_4bit:ca1.SW[3]
+a[8] => RCA_4bit:ca2.SW[0]
+a[9] => RCA_4bit:ca2.SW[1]
+a[10] => RCA_4bit:ca2.SW[2]
+a[11] => RCA_4bit:ca2.SW[3]
+a[12] => RCA_4bit:ca3.SW[0]
+a[13] => RCA_4bit:ca3.SW[1]
+a[14] => RCA_4bit:ca3.SW[2]
+a[15] => RCA_4bit:ca3.SW[3]
+b[0] => RCA_4bit:ca0.SW[4]
+b[1] => RCA_4bit:ca0.SW[5]
+b[2] => RCA_4bit:ca0.SW[6]
+b[3] => RCA_4bit:ca0.SW[7]
+b[4] => RCA_4bit:ca1.SW[4]
+b[5] => RCA_4bit:ca1.SW[5]
+b[6] => RCA_4bit:ca1.SW[6]
+b[7] => RCA_4bit:ca1.SW[7]
+b[8] => RCA_4bit:ca2.SW[4]
+b[9] => RCA_4bit:ca2.SW[5]
+b[10] => RCA_4bit:ca2.SW[6]
+b[11] => RCA_4bit:ca2.SW[7]
+b[12] => RCA_4bit:ca3.SW[4]
+b[13] => RCA_4bit:ca3.SW[5]
+b[14] => RCA_4bit:ca3.SW[6]
+b[15] => RCA_4bit:ca3.SW[7]
+rsn => RCA_4bit:ca0.KEY0
+rsn => RCA_4bit:ca1.KEY0
+rsn => RCA_4bit:ca2.KEY0
+rsn => RCA_4bit:ca3.KEY0
+clock => RCA_4bit:ca0.KEY1
+clock => RCA_4bit:ca1.KEY1
+clock => RCA_4bit:ca2.KEY1
+clock => RCA_4bit:ca3.KEY1
+c[0] <= RCA_4bit:ca0.LEDR[0]
+c[1] <= RCA_4bit:ca0.LEDR[1]
+c[2] <= RCA_4bit:ca0.LEDR[2]
+c[3] <= RCA_4bit:ca0.LEDR[3]
+c[4] <= RCA_4bit:ca1.LEDR[0]
+c[5] <= RCA_4bit:ca1.LEDR[1]
+c[6] <= RCA_4bit:ca1.LEDR[2]
+c[7] <= RCA_4bit:ca1.LEDR[3]
+c[8] <= RCA_4bit:ca2.LEDR[0]
+c[9] <= RCA_4bit:ca2.LEDR[1]
+c[10] <= RCA_4bit:ca2.LEDR[2]
+c[11] <= RCA_4bit:ca2.LEDR[3]
+c[12] <= RCA_4bit:ca3.LEDR[0]
+c[13] <= RCA_4bit:ca3.LEDR[1]
+c[14] <= RCA_4bit:ca3.LEDR[2]
+c[15] <= RCA_4bit:ca3.LEDR[3]
+ovrf <= RCA_4bit:ca3.LEDR9
+
+
+|RCA_16bit|RCA_4bit:ca0
+SW[0] => regn:regA.R[0]
+SW[1] => regn:regA.R[1]
+SW[2] => regn:regA.R[2]
+SW[3] => regn:regA.R[3]
+SW[4] => regn:regB.R[0]
+SW[5] => regn:regB.R[1]
+SW[6] => regn:regB.R[2]
+SW[7] => regn:regB.R[3]
+SW[8] => signed_adder:rca.cin
+KEY0 => regn:regA.Resetn
+KEY0 => regn:regB.Resetn
+KEY0 => regn:regC.Resetn
+KEY1 => regn:regA.Clock
+KEY1 => regn:regB.Clock
+KEY1 => regn:regC.Clock
+LEDR[0] <= regn:regC.Q[0]
+LEDR[1] <= regn:regC.Q[1]
+LEDR[2] <= regn:regC.Q[2]
+LEDR[3] <= regn:regC.Q[3]
+LEDR4 <= signed_adder:rca.cout
+LEDR9 <= LEDR9.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca0|regn:regA
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca0|regn:regB
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca0|regn:regC
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca0|signed_adder:rca
+in1[0] => full_adder:fa0.a
+in1[1] => full_adder:fa1.a
+in1[2] => full_adder:fa2.a
+in1[3] => full_adder:fa3.a
+in2[0] => full_adder:fa0.b
+in2[1] => full_adder:fa1.b
+in2[2] => full_adder:fa2.b
+in2[3] => full_adder:fa3.b
+cin => full_adder:fa0.ci
+cout <= full_adder:fa3.co
+sgn <= full_adder:fa2.co
+s[0] <= full_adder:fa0.sum
+s[1] <= full_adder:fa1.sum
+s[2] <= full_adder:fa2.sum
+s[3] <= full_adder:fa3.sum
+
+
+|RCA_16bit|RCA_4bit:ca0|signed_adder:rca|full_adder:fa0
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca0|signed_adder:rca|full_adder:fa0|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca0|signed_adder:rca|full_adder:fa1
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca0|signed_adder:rca|full_adder:fa1|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca0|signed_adder:rca|full_adder:fa2
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca0|signed_adder:rca|full_adder:fa2|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca0|signed_adder:rca|full_adder:fa3
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca0|signed_adder:rca|full_adder:fa3|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca1
+SW[0] => regn:regA.R[0]
+SW[1] => regn:regA.R[1]
+SW[2] => regn:regA.R[2]
+SW[3] => regn:regA.R[3]
+SW[4] => regn:regB.R[0]
+SW[5] => regn:regB.R[1]
+SW[6] => regn:regB.R[2]
+SW[7] => regn:regB.R[3]
+SW[8] => signed_adder:rca.cin
+KEY0 => regn:regA.Resetn
+KEY0 => regn:regB.Resetn
+KEY0 => regn:regC.Resetn
+KEY1 => regn:regA.Clock
+KEY1 => regn:regB.Clock
+KEY1 => regn:regC.Clock
+LEDR[0] <= regn:regC.Q[0]
+LEDR[1] <= regn:regC.Q[1]
+LEDR[2] <= regn:regC.Q[2]
+LEDR[3] <= regn:regC.Q[3]
+LEDR4 <= signed_adder:rca.cout
+LEDR9 <= LEDR9.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca1|regn:regA
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca1|regn:regB
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca1|regn:regC
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca1|signed_adder:rca
+in1[0] => full_adder:fa0.a
+in1[1] => full_adder:fa1.a
+in1[2] => full_adder:fa2.a
+in1[3] => full_adder:fa3.a
+in2[0] => full_adder:fa0.b
+in2[1] => full_adder:fa1.b
+in2[2] => full_adder:fa2.b
+in2[3] => full_adder:fa3.b
+cin => full_adder:fa0.ci
+cout <= full_adder:fa3.co
+sgn <= full_adder:fa2.co
+s[0] <= full_adder:fa0.sum
+s[1] <= full_adder:fa1.sum
+s[2] <= full_adder:fa2.sum
+s[3] <= full_adder:fa3.sum
+
+
+|RCA_16bit|RCA_4bit:ca1|signed_adder:rca|full_adder:fa0
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca1|signed_adder:rca|full_adder:fa0|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca1|signed_adder:rca|full_adder:fa1
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca1|signed_adder:rca|full_adder:fa1|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca1|signed_adder:rca|full_adder:fa2
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca1|signed_adder:rca|full_adder:fa2|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca1|signed_adder:rca|full_adder:fa3
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca1|signed_adder:rca|full_adder:fa3|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca2
+SW[0] => regn:regA.R[0]
+SW[1] => regn:regA.R[1]
+SW[2] => regn:regA.R[2]
+SW[3] => regn:regA.R[3]
+SW[4] => regn:regB.R[0]
+SW[5] => regn:regB.R[1]
+SW[6] => regn:regB.R[2]
+SW[7] => regn:regB.R[3]
+SW[8] => signed_adder:rca.cin
+KEY0 => regn:regA.Resetn
+KEY0 => regn:regB.Resetn
+KEY0 => regn:regC.Resetn
+KEY1 => regn:regA.Clock
+KEY1 => regn:regB.Clock
+KEY1 => regn:regC.Clock
+LEDR[0] <= regn:regC.Q[0]
+LEDR[1] <= regn:regC.Q[1]
+LEDR[2] <= regn:regC.Q[2]
+LEDR[3] <= regn:regC.Q[3]
+LEDR4 <= signed_adder:rca.cout
+LEDR9 <= LEDR9.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca2|regn:regA
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca2|regn:regB
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca2|regn:regC
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca2|signed_adder:rca
+in1[0] => full_adder:fa0.a
+in1[1] => full_adder:fa1.a
+in1[2] => full_adder:fa2.a
+in1[3] => full_adder:fa3.a
+in2[0] => full_adder:fa0.b
+in2[1] => full_adder:fa1.b
+in2[2] => full_adder:fa2.b
+in2[3] => full_adder:fa3.b
+cin => full_adder:fa0.ci
+cout <= full_adder:fa3.co
+sgn <= full_adder:fa2.co
+s[0] <= full_adder:fa0.sum
+s[1] <= full_adder:fa1.sum
+s[2] <= full_adder:fa2.sum
+s[3] <= full_adder:fa3.sum
+
+
+|RCA_16bit|RCA_4bit:ca2|signed_adder:rca|full_adder:fa0
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca2|signed_adder:rca|full_adder:fa0|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca2|signed_adder:rca|full_adder:fa1
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca2|signed_adder:rca|full_adder:fa1|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca2|signed_adder:rca|full_adder:fa2
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca2|signed_adder:rca|full_adder:fa2|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca2|signed_adder:rca|full_adder:fa3
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca2|signed_adder:rca|full_adder:fa3|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca3
+SW[0] => regn:regA.R[0]
+SW[1] => regn:regA.R[1]
+SW[2] => regn:regA.R[2]
+SW[3] => regn:regA.R[3]
+SW[4] => regn:regB.R[0]
+SW[5] => regn:regB.R[1]
+SW[6] => regn:regB.R[2]
+SW[7] => regn:regB.R[3]
+SW[8] => signed_adder:rca.cin
+KEY0 => regn:regA.Resetn
+KEY0 => regn:regB.Resetn
+KEY0 => regn:regC.Resetn
+KEY1 => regn:regA.Clock
+KEY1 => regn:regB.Clock
+KEY1 => regn:regC.Clock
+LEDR[0] <= regn:regC.Q[0]
+LEDR[1] <= regn:regC.Q[1]
+LEDR[2] <= regn:regC.Q[2]
+LEDR[3] <= regn:regC.Q[3]
+LEDR4 <= signed_adder:rca.cout
+LEDR9 <= LEDR9.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca3|regn:regA
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca3|regn:regB
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca3|regn:regC
+R[0] => Q[0]~reg0.DATAIN
+R[1] => Q[1]~reg0.DATAIN
+R[2] => Q[2]~reg0.DATAIN
+R[3] => Q[3]~reg0.DATAIN
+Clock => Q[0]~reg0.CLK
+Clock => Q[1]~reg0.CLK
+Clock => Q[2]~reg0.CLK
+Clock => Q[3]~reg0.CLK
+Resetn => Q[0]~reg0.ACLR
+Resetn => Q[1]~reg0.ACLR
+Resetn => Q[2]~reg0.ACLR
+Resetn => Q[3]~reg0.ACLR
+Q[0] <= Q[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[1] <= Q[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[2] <= Q[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Q[3] <= Q[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca3|signed_adder:rca
+in1[0] => full_adder:fa0.a
+in1[1] => full_adder:fa1.a
+in1[2] => full_adder:fa2.a
+in1[3] => full_adder:fa3.a
+in2[0] => full_adder:fa0.b
+in2[1] => full_adder:fa1.b
+in2[2] => full_adder:fa2.b
+in2[3] => full_adder:fa3.b
+cin => full_adder:fa0.ci
+cout <= full_adder:fa3.co
+sgn <= full_adder:fa2.co
+s[0] <= full_adder:fa0.sum
+s[1] <= full_adder:fa1.sum
+s[2] <= full_adder:fa2.sum
+s[3] <= full_adder:fa3.sum
+
+
+|RCA_16bit|RCA_4bit:ca3|signed_adder:rca|full_adder:fa0
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca3|signed_adder:rca|full_adder:fa0|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca3|signed_adder:rca|full_adder:fa1
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca3|signed_adder:rca|full_adder:fa1|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca3|signed_adder:rca|full_adder:fa2
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca3|signed_adder:rca|full_adder:fa2|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|RCA_16bit|RCA_4bit:ca3|signed_adder:rca|full_adder:fa3
+a => f1.IN0
+a => sum.IN0
+b => f1.IN1
+b => sum.IN1
+b => MUX2to1_1bit:mux.input1
+ci => sum.IN1
+ci => MUX2to1_1bit:mux.input2
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+co <= MUX2to1_1bit:mux.output
+
+
+|RCA_16bit|RCA_4bit:ca3|signed_adder:rca|full_adder:fa3|MUX2to1_1bit:mux
+input1 => output.DATAB
+input2 => output.DATAA
+sel => output.OUTPUTSELECT
+output <= output.DB_MAX_OUTPUT_PORT_TYPE
+
+
