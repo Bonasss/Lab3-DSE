@@ -15,11 +15,6 @@ ARCHITECTURE structural OF RCA_4bit IS
 SIGNAL a, b, c: SIGNED(3 DOWNTO 0);
 SIGNAL cn, cn1: STD_LOGIC;
 
-COMPONENT flipflop IS
-	PORT (D, Clock, Resetn : IN STD_LOGIC;
-	Q : OUT STD_LOGIC);
-END COMPONENT;
-
 COMPONENT signed_adder IS
 	PORT (in1, in2: IN SIGNED(3 DOWNTO 0);
 	cin: IN STD_LOGIC;
