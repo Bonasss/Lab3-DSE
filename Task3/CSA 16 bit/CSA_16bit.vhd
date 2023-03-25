@@ -10,6 +10,7 @@ ovrf: OUT STD_LOGIC);
 END CSA_16bit;
 
 ARCHITECTURE structural OF CSA_16bit IS
+SIGNAL reg1, reg2, reg3: SIGNED(15 DOWNTO 0);
 SIGNAL logic_a, logic_b, logic_c: STD_LOGIC_VECTOR(15 DOWNTO 0);
 
 type four_by_four is array (0 TO 3) of STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -20,6 +21,13 @@ type adder_input_vector is array (3 DOWNTO 0) of STD_LOGIC_VECTOR(7 DOWNTO 0);
 SIGNAL swt: adder_input_vector;
 SIGNAL carry0, carry1, carry: STD_LOGIC_VECTOR(0 to 3);
 SIGNAL ovf: STD_LOGIC_VECTOR(1 DOWNTO 0);
+
+COMPONENT regn IS
+	GENERIC ( N : integer:=4); 
+	PORT (R : IN SIGNED(N-1 DOWNTO 0);
+	Clock, Resetn : IN STD_LOGIC; 
+	Q : OUT SIGNED(N-1 DOWNTO 0));
+END COMPONENT;
 
 COMPONENT RCA_4bit IS
     PORT (SW: IN STD_LOGIC_VECTOR(7 DOWNTO 0); -- b (7 downto 4) a(3 downto 0) sw 8 for subtraction
@@ -39,14 +47,23 @@ COMPONENT MUX2to1_1bit IS
     output: OUT STD_LOGIC);
 END COMPONENT;
 
+COMPONENT flipflop IS
+    PORT (D, Clock, Resetn : IN STD_LOGIC;
+    Q : OUT STD_LOGIC);
+END COMPONENT;
+
 BEGIN
-logic_a <= STD_LOGIC_VECTOR(a);
-logic_b <= STD_LOGIC_VECTOR(b);
+logic_a <= STD_LOGIC_VECTOR(reg1);
+logic_b <= STD_LOGIC_VECTOR(reg2);
 carry(0) <= '0';
 swt(0) <= (logic_b(3 DOWNTO 0) & logic_a(3 DOWNTO 0));
 swt(1) <= (logic_b(7 DOWNTO 4) & logic_a(7 DOWNTO 4));
 swt(2) <= (logic_b(11 DOWNTO 8) & logic_a(11 DOWNTO 8));
 swt(3) <= (logic_b(15 DOWNTO 12) & logic_a(15 DOWNTO 12));
+regn1: regn GENERIC MAP(N => 16) 
+	  PORT MAP (R=>a, Clock=>clock, Resetn=>rsn, Q=>reg1);
+regn2: regn GENERIC MAP(N => 16) 
+          PORT MAP (R=>b, Clock=>clock, Resetn=>rsn, Q=>reg2);
     q1: for i in 0 to 3 generate
         q2: if i < 3 generate
             add0: RCA_4bit PORT MAP (SW => swt(i), cin=>'0', KEY0 => rsn, KEY1 => clock, LEDR => output0(i), LEDR4 => carry0(i+1), LEDR9 => open);
@@ -62,5 +79,7 @@ swt(3) <= (logic_b(15 DOWNTO 12) & logic_a(15 DOWNTO 12));
         end generate;
     end generate;
 logic_c <= m(3) & m(2) & m(1) & m(0);
-c <= SIGNED(logic_c);
+reg3 <= SIGNED(logic_c);
+regn3: regn GENERIC MAP(N => 16) 
+	PORT MAP (R=>reg3, Clock=>clock, Resetn=>rsn, Q=>c);
 END structural;

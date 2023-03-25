@@ -2,10 +2,10 @@ LIBRARY IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-ENTITY RCA_tb IS
-END RCA_tb;
+ENTITY CSA_tb IS
+END CSA_tb;
 
-ARCHITECTURE test OF RCA_tb IS
+ARCHITECTURE test OF CSA_tb IS
 SIGNAL num1: SIGNED(15 DOWNTO 0):= (others => '0');
 SIGNAL num2: SIGNED(15 DOWNTO 0):= (others => '0');
 SIGNAL res: SIGNED(15 DOWNTO 0);
@@ -13,7 +13,7 @@ SIGNAL resetn, ovf: STD_LOGIC;
 SIGNAL clk: STD_LOGIC := '0';
 constant num_cycles : integer := 50;
 
-COMPONENT RCA_16bit IS
+COMPONENT CSA_16bit IS
     PORT (a, b: IN SIGNED(15 DOWNTO 0);
     rsn, clock: IN STD_LOGIC;
     c: OUT SIGNED(15 DOWNTO 0);
@@ -21,7 +21,7 @@ COMPONENT RCA_16bit IS
 END COMPONENT;
 
 BEGIN
-uut: RCA_16bit PORT MAP(a => num1, b => num2, rsn => resetn, clock => clk, c => res, ovrf => ovf);
+uut: CSA_16bit PORT MAP(a => num1, b => num2, rsn => resetn, clock => clk, c => res, ovrf => ovf);
 PROCESS
 	BEGIN
 	WAIT FOR 100 ns; -- 0+0

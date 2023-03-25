@@ -1,6 +1,9 @@
-Task3\RCA_16bit.qpf
-Task3\RCA_16bit.qws
-Task3\RCA_16bit.qsf
-Task3\RCA_16bit.qpf
-Task3\MUX2to1_1bit.vhd.bak
-Task3\full_adder.vhd.bak
+**/*.bak
+**/*.qpf
+**/*.qsf
+**/*.qws
+**/db
+**/incremental_db
+**/output_files
+**/c5_pin_model_dump.txt
+
