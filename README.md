@@ -1,13 +1,15 @@
 # Lab3-DSE
 Repository del terzo lab di DSE, contiene tutte le task funzionanti fino alla task 3, manca il multiplier.
-Nelle varie task alcuni componenti base come multiplexer, full adders, registri etc. vengono riutilizzati, ma, poiché sono un coglione casinista, a seconda della task possono essere leggermente modificati, questo fa sì che modelsim li veda con nome uguale ma si lamenti per size/nome dei ports. Per questo motivo utilizzare sempre il .vhd della componente nella cartella della specifica task che si sta simulando.
+Nelle varie task alcuni componenti base come multiplexer, full adders, registri etc. vengono riutilizzati, ma, poiché sono un coglione casinista, a seconda della task possono essere leggermente modificati, questo fa sì che modelsim li veda con nome uguale ma si lamenti per size/nome dei ports. Per questo motivo utilizzare sempre il .vhd della componente nella cartella della specifica task che si sta simulando. MANCAVA IL FLIPFLOP ALL'OVERFLOW PORCACCIA LA PUTTANA. DEVO RISIMULARE TUTTA LA TASK 1 E 2.
 
 ## Task 1, RCA a 4 bit
-La task 1 dovrebbe essere completa e funzionante incluso l'overflow.
+La task 1 dovrebbe essere completa e funzionante incluso l'overflow. Timing simulation dà glitch: probabilmente colpa della sintesi perché il calcolo della somma avviene abbastanza velocemente (5-6 ns), infatti il glitch è sempre un solo bit che cambia a caso. Il problema è che il glitch non si risolve fino al clock successivo. Nel report scrivere che sarà necessaria un'architettura più robusta.
+
 ## Task 2
-La task 2 funziona, anche la sottrazione, notare che la sottrazione avviene "primo termine - secondo termine" ed il secondo termine è denotato dai SW7-SW4
+La task 2 funziona, anche la sottrazione, notare che la sottrazione avviene "primo termine - secondo termine" ed il secondo termine è denotato dai SW7-SW4. La sottrazione avviene prendendo il 2s complement di b. Per fare questo il 1s complement è ottenuto con uno XOR tra ogni bit di b e il bit che indica la sottrazione, questo bit è anche assegnato al port cin, in modo da aggiungere 1 al 1s complement per ottenere il 2s complement in caso di sottrazione.
+
 ## Task 3
-Il RCA a 16 bit sembra funzionare, l'ho implementato coi signed per semplificare un po' la scrittura della testbench, ma non so se è stata una buona idea, per la timing analysis bisogna andarsi a cercare qual era il worst case da aggiungere poi nelle casistiche.
+Il RCA a 16 bit sembra funzionare, l'ho implementato coi signed per semplificare un po' la scrittura della testbench, ma non so se è stata una buona idea, per la timing analysis bisogna andarsi a cercare qual era il worst case da aggiungere poi nelle casistiche. Li ho resi puramente combinational per vedere bene i propagation delays
 
 Ho notato che chatGPT non è male a fare i report. Mentre cercavo di capire che errore avessi fatto ho provato a dargli il codice e mi ha fatto un super riassuntazzo del CSA. 
 

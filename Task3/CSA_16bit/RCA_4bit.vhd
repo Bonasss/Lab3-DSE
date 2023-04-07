@@ -12,15 +12,8 @@ END RCA_4bit;
 
 ARCHITECTURE structural OF RCA_4bit IS
 
-SIGNAL a, q1, b, q2, c, q3: SIGNED(3 DOWNTO 0);
+SIGNAL a, b, c: SIGNED(3 DOWNTO 0);
 SIGNAL cn, cn1: STD_LOGIC;
-
-COMPONENT regn IS
-	GENERIC ( N : integer:=4); 
-	PORT (R : IN SIGNED(N-1 DOWNTO 0);
-	Clock, Resetn : IN STD_LOGIC; 
-	Q : OUT SIGNED(N-1 DOWNTO 0));
-END COMPONENT;
 
 COMPONENT signed_adder IS
 	PORT (in1, in2: IN SIGNED(3 DOWNTO 0);
@@ -32,11 +25,8 @@ END COMPONENT;
 BEGIN
 	a<=SIGNED(SW(3 DOWNTO 0));
 	b<=SIGNED(SW(7 DOWNTO 4));
-	regA:  regn PORT MAP (R => a, Clock => KEY1, Resetn => KEY0, Q =>q1);
-	regB:  regn PORT MAP (R => b, Clock => KEY1, Resetn => KEY0, Q =>q2);
-	regC:  regn PORT MAP (R => c, Clock => KEY1, Resetn => KEY0, Q =>q3);
-	rca: signed_adder PORT MAP (in1=>q1, in2=>q2, cin=>cin, cout=>cn, sgn=> cn1, s=>c);
+	rca: signed_adder PORT MAP (in1=>a, in2=>b, cin=>cin, cout=>cn, sgn=> cn1, s=>c);
 	LEDR9 <= (cn XOR cn1);
-	LEDR<=STD_LOGIC_VECTOR(q3);
+	LEDR<=STD_LOGIC_VECTOR(c);
 	LEDR4<=cn;
 END structural;

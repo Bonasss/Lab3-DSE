@@ -10,7 +10,7 @@ END RCA_4bit;
 
 ARCHITECTURE structural OF RCA_4bit IS
 SIGNAL a, q1, b, q2, c, q3: SIGNED(3 DOWNTO 0);
-SIGNAL cn, cn1: STD_LOGIC;
+SIGNAL cn, cn1, ovf: STD_LOGIC;
 
 COMPONENT regn IS
 	GENERIC ( N : integer:=4); 
@@ -26,6 +26,11 @@ COMPONENT signed_adder IS
 	s: OUT SIGNED(3 DOWNTO 0));
 END COMPONENT;
 
+COMPONENT flipflop IS
+    PORT (D, Clock, Resetn : IN STD_LOGIC;
+    Q : OUT STD_LOGIC);
+END COMPONENT;
+
 BEGIN
 	a<=SIGNED(SW(3 DOWNTO 0));
 	b<=SIGNED(SW(7 DOWNTO 4));
@@ -33,7 +38,8 @@ BEGIN
 	regB:  regn PORT MAP (R => b, Clock => KEY(1), Resetn => KEY(0), Q =>q2);
 	regC:  regn PORT MAP (R => c, Clock => KEY(1), Resetn => KEY(0), Q =>q3);
 	rca: signed_adder PORT MAP (in1=>q1, in2=>q2, cin=>'0', cout=>cn, sgn=> cn1, s=>c);
-	LEDR(9) <= (cn XOR cn1);
+	ffo: flipflop PORT MAP (D=>ovf, Clock=> KEY(1), Resetn=> KEY(0), Q=>LEDR(9));
+	ovf <= (cn XOR cn1);
 	LEDR(8 DOWNTO 4)<="00000";
 	LEDR(3 DOWNTO 0)<=STD_LOGIC_VECTOR(q3);
 END structural;

@@ -2,41 +2,58 @@ LIBRARY IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-ENTITY RCA_tb IS
-END RCA_tb;
+ENTITY RCA4sub_tb IS
+END RCA4sub_tb;
 
-ARCHITECTURE test OF RCA_tb IS
+ARCHITECTURE test OF RCA4sub_tb IS
+SIGNAL a_in, b_in, res: STD_LOGIC_VECTOR(3 DOWNTO 0);
 SIGNAL switches: STD_LOGIC_VECTOR(8 DOWNTO 0);
+SIGNAL ledout: STD_LOGIC_VECTOR(9 DOWNTO 0);
 SIGNAL resetn, ovf: STD_LOGIC;
-SIGNAL clk: STD_LOGIC := '0';
-SIGNAL res: STD_LOGIC_VECTOR(3 DOWNTO 0);
+SIGNAL subt_en, clk: STD_LOGIC := '0';
 constant num_cycles : integer := 50;
 
-COMPONENT RCA_4bit IS
-	PORT (SW: IN STD_LOGIC_VECTOR(8 DOWNTO 0); -- b (7 downto 4) a(3 downto 0)
-	KEY0: IN STD_LOGIC; -- active low asynchronous reset input
-	KEY1: IN STD_LOGIC; -- manual clock input
-	LEDR: OUT STD_LOGIC_VECTOR(3 DOWNTO 0); 
-	LEDR9: OUT STD_LOGIC); -- overflow bit
+COMPONENT RCA_4bit_w_sub IS
+	PORT (SW: IN STD_LOGIC_VECTOR(8 DOWNTO 0); -- b (7 downto 4) a(3 downto 0) sw 8 for subtraction
+	KEY: IN STD_LOGIC_VECTOR(1 DOWNTO 0); -- active low asynchronous reset input  -- manual clock input
+	LEDR: OUT STD_LOGIC_VECTOR(9 DOWNTO 0)); --  RES AND overflow bit
 END COMPONENT;
 
 BEGIN
-uut: RCA_4bit PORT MAP(SW=>switches, KEY0=>resetn, KEY1=>clk, LEDR=>res, LEDR9=>ovf);
+uut: RCA_4bit_w_sub PORT MAP(SW=>switches, KEY(0)=>resetn, KEY(1)=>clk, LEDR=>ledout);
+switches <= subt_en & b_in & a_in ;
+res <= ledout(3 DOWNTO 0);
+ovf <= ledout(9);
 PROCESS
 	BEGIN
-	switches <='0' & "0000" & "0000"; -- 0+0 expected res: 0000
+	a_in <= "0000";
+	b_in <= "0000"; -- 0+0 expected res: 0000
 	WAIT FOR 100 ns;
-	switches <= '0' & "0001" & "0001"; -- 1+1 expected res: 0010
+	a_in <= "0001";
+	b_in <= "0001";-- 1+1 expected res: 0010
 	WAIT FOR 100 ns;
-	switches <= '0' & "0010" & "0010"; -- 2+2 expected res: 0100
+	a_in <= "0010";
+	b_in <= "0010";
+	 -- 2+2 expected res: 0100
 	WAIT FOR 100 ns;
-	switches <= '0' & "0010" & "1110"; -- 2-2 expected res: 0000
+	a_in <= "0010";
+	b_in <= "1110";
+	 -- 2-2 expected res: 0000
 	WAIT FOR 100 ns;
-	switches <= '1' & "1111" & "0011"; -- -1-3 (using subtraction bit sw8) expected res: 1100
+	subt_en <= '1';
+	a_in <= "1111";
+	b_in <= "0011"; 
+	-- -1-3 (using subtraction bit sw8) expected res: 1100
 	WAIT FOR 100 ns;
-	switches <= '0' & "0111" & "0111"; -- 7+7 check ovf expected res: ovf ='1'
+	subt_en <= '0';
+	a_in <= "0111";
+	b_in <= "0111";
+	-- 7+7 check ovf expected res: ovf ='1'
 	WAIT FOR 100 ns;
-	switches <= '1' & "0110" & "0101"; -- 6-5 check reset expected res: 0000 and check subtraction again
+	subt_en <= '1';
+	a_in <= "0110";
+	b_in <= "0101";
+	-- 6-5 check reset expected res: 0000 and check subtraction again
 	WAIT FOR 100 ns;
 	WAIT;
 END PROCESS;
